@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block body%}
+
+<div class="card card-primary">
+    <div class="form-group">
+            <form action="/update_usu/{{usuario.0}}" method="POST">
+                <input class="form-control mb-2" type="text" name="nombre" value="{{usuario.1}}">
+                <input class="form-control mb-2" type="text" name="correo" value="{{usuario.2}}">
+                <input class="form-control mb-2" type="text" name="password" value="{{usuario.3}}">
+                <button class="btn btn-success btn-block" type="submit">
+                    Save
+                </button>
+            </form>
+    </div>
+        
+</div>
+
+ {% endblock %}

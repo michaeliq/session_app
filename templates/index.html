@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="row">
+    <!--FORMULARIOS PARA INGRESO DE USUARIOS-->
+    <div class="col-md-5">
+        <div class="" style="max-width: 20rem; margin-top: 1rem ">
+            <div class="container" style="width: 95%; margin: 0%;">
+                {% with messages = get_flashed_messages() %}
+                 {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible alert-success" role="alert">
+                        {{messages.0}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+                <h5 class="card-title text-center">Registro de usuario</h5>
+                <form action="/signin" method="POST">
+                    <input class="form-control mb-1" type="text" name="nombre" placeholder="ingresa tu nombre">
+                    <input class="form-control mb-1" type="email" name="correo" placeholder="ingresa tu correo">
+                    <input class="form-control mb-1" type="password" name="password" placeholder="ingresa tu contraseña">
+                    <button class="btn btn-info btn-block" type="submit">
+                    Save
+                    </button>
+                </form>    
+                {% if session['name'] %}
+                        <a class="btn btn-block btn-danger mt-4" href="/logout"> cerrar session</a>
+                {% endif%}
+            </div>
+            
+        </div>
+    </div>
+
+
+    <!--TABLA DE DATOS DE USUARIOS-->
+    {% if session['name'] %} 
+            <div class="col-md-7">
+                <table class="">
+                        <thead>
+                            <tr>
+                                <td class="text-center">Usuarios</td>
+                                <td class="text-center">Correo</td>
+                                <td class="text-center">Opciones</td>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                                {% for usuario in usuarios %}
+                                <tr>
+                                    <td>{{ usuario.1[0:12] }}</td>
+                                    <td>{{ usuario.2 }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                                <a class="btn btn-danger btn-sm" href="/delete/{{usuario.0}}">BORRAR</a>
+                                                <a class="btn btn-dark btn-sm" href="/update/{{usuario.0}}">MODIFICAR</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
+                            
+                </table>      
+        </div>
+    {% else %}
+        <div class="mt-4" style="width: 30rem">
+            
+            <h5 class="card-title text-center">Inicia Session Aqui</h5>
+            <form action="/login" method="POST">
+                <input class="form-control mb-1" type="email" name="correo" placeholder="ingresa tu correo">
+                <input class="form-control mb-1" type="password" name="password" placeholder="ingresa tu contraseña">
+                <button class="btn btn-info btn-block" type="submit">
+                Login
+                </button>
+            </form>    
+        
+        </div>
+    {% endif %}
+</div>
+{% endblock%}
